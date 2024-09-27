@@ -27,7 +27,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             <div class="message-content">${log.Contents || '(Žádný text)'}</div>
           `;
   
-          // Pokud existuje příloha, přidáme ji do zprávy
+          // Pokud existuje příloha, přidám ji do zprávy
           if (log.Attachments) {
             messageHTML += `<img src="${log.Attachments}" alt="Příloha">`;
           }
