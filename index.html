@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -305,3 +306,350 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Log Uploader | DLU</title>
+  
+  <meta name="description" content="Discord Log Uploader is a tool designed to convert Discord .json log files into a readable chat format. Simply upload your log files and view the messages in an intuitive interface.">
+
+  <link rel="icon" href="pfps/logo.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #181818;
+      color: #dcddde;
+      font-family: 'GG Sans', Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chat-container {
+      width: 100%;
+      height: 600px;
+      overflow-y: scroll;
+      background-color: #36393f;
+      color: #dcddde;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #424549;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 5px;
+    }
+
+    .message-header img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .message-header .username {
+      font-weight: bold;
+    }
+
+    .timestamp {
+      font-size: 12px;
+      color: #72767d;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .message-content {
+      margin-top: 5px;
+      margin-left: 50px;
+    }
+
+    #messagesFileInput, #channelFileInput {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .edit-section {
+      margin-top: 20px;
+    }
+
+    .edit-section label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .edit-section input {
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Dosis', sans-serif;
+      border-bottom: 2px solid #2f7bff;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #2f7bff;
+      text-align: center;
+      font-family: 'Dosis', sans-serif;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .loader {
+      display: none;
+      margin-left: 10px;
+    }
+
+    .loader.show {
+      display: inline-block;
+    }
+
+    .success {
+      display: none;
+      color: #28a745;
+      margin-left: 10px;
+    }
+
+    .success.show {
+      display: inline-block;
+    }
+
+    .user-id {
+      color: #2f7bff;
+    }
+
+    .deleted-user {
+      color: red;
+    }
+
+    .guild-info, .log-type {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #36393f;
+      color: #dcddde;
+    }
+
+    /* Footer styling */
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      text-align: center;
+      background-color: #2c2f33;
+      color: white;
+      border-radius: 10px;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Discord Log Uploader</h1>
+    <h2><strong>by Skelen</strong></h2>
+
+    <!-- File inputs for uploading messages.json and channel.json -->
+    <input type="file" id="messagesFileInput" class="form-control" accept=".json" />
+    <label for="messagesFileInput">Upload messages.json</label>
+
+    <input type="file" id="channelFileInput" class="form-control" accept=".json" />
+    <label for="channelFileInput">Upload channel.json</label>
+
+    <!-- One button to upload both files -->
+    <button class="btn btn-primary" id="uploadFilesBtn">Upload Files</button>
+    <span class="loader" id="loader">Uploading...</span>
+    <span class="success" id="success">✔ Files uploaded</span>
+
+    <!-- Displaying messages -->
+    <div id="chat-container" class="chat-container"></div>
+
+    <!-- Profile editing section -->
+    <div id="edit-section" class="edit-section">
+      <div id="profile-edit">
+        <label for="username">Username:</label>
+        <input type="text" id="username" class="form-control input-username" maxlength="20" />
+        <label for="pfp">Profile Picture:</label>
+        <input type="file" id="pfp" class="form-control" />
+        <button class="btn btn-success" id="saveChangesBtn">Save Changes</button>
+        <div class="error" id="error-message"></div>
+      </div>
+    </div>
+
+    <!-- Displaying users and log type -->
+    <div id="user-info" class="guild-info">
+      <strong>User ID:</strong>
+      <div id="userList"></div>
+    </div>
+
+    <div id="log-type" class="log-type">
+      <strong>Log Type:</strong>
+      <div id="logType"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div style="background-color: #2c2f33; padding: 20px; border-radius: 10px; text-align: center; color: #72767d;">
+      <a href="https://discord.gg/yA6drW9AJs" target="_blank" class="discord-logo" style="font-size: 30px; margin-right: 10px; color: #2f7bff;">
+        <i class="bi bi-discord"></i>
+      </a>
+      <div class="footer-links">
+        <a href="other_sites/faq.html" target="_blank" style="color: #2f7bff; text-decoration: none; margin: 0 15px;">FAQ</a> |
+        <a href="other_sites/terms-of-service.html" target="_blank" style="color: #2f7bff; text-decoration: none; margin: 0 15px;">Terms of Service</a> |
+        <a href="other_sites/privacy-policy.html" target="_blank" style="color: #2f7bff; text-decoration: none; margin: 0 15px;">Privacy Policy</a>
+      </div>
+      <div style="margin-top: 10px;">© SkelenDev | Not affiliated with Discord, Inc.</div>
+    </div>
+  </footer>
+
+  <script>
+    const pfpImages = Array.from({length: 10}, (_, i) => `pfps/pfp${i + 1}.png`);
+    let globalUsername = "Unknown";
+    let globalPfp = getRandomPfp();
+
+    function getRandomPfp() {
+      return pfpImages[Math.floor(Math.random() * pfpImages.length)];
+    }
+
+    // Function to upload both files
+    document.getElementById('uploadFilesBtn').addEventListener('click', function() {
+      const messagesFileInput = document.getElementById('messagesFileInput');
+      const channelFileInput = document.getElementById('channelFileInput');
+      const messagesFile = messagesFileInput.files[0];
+      const channelFile = channelFileInput.files[0];
+
+      if (!messagesFile || !channelFile) {
+        alert('Please upload both files: messages.json and channel.json.');
+        return;
+      }
+
+      const loader = document.getElementById('loader');
+      const success = document.getElementById('success');
+      loader.classList.add('show');
+      success.classList.remove('show');
+
+      // Loading messages.json
+      const messagesReader = new FileReader();
+      messagesReader.onload = function(e) {
+        const logs = JSON.parse(e.target.result);
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.innerHTML = ''; // Clear previous messages
+
+        logs.forEach(log => {
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('message');
+
+          const timestamp = new Date(log.Timestamp).toLocaleString();
+          messageDiv.innerHTML = `
+            <div class="timestamp">${timestamp}</div>
+            <div class="message-header">
+              <img src="${globalPfp}" alt="PFP">
+              <span class="username">${globalUsername}</span>
+            </div>
+            <div class="message-content">${log.Contents || (log.Attachments ? `<a href="${log.Attachments}" target="_blank">Attachment</a>` : '')}</div>
+          `;
+          chatContainer.appendChild(messageDiv);
+        });
+
+        loader.classList.remove('show');
+        success.classList.add('show');
+      };
+
+      messagesReader.readAsText(messagesFile);
+
+      // Loading channel.json
+      const channelReader = new FileReader();
+      channelReader.onload = function(e) {
+        const channels = JSON.parse(e.target.result);
+        const userList = document.getElementById('userList');
+        const logType = document.getElementById('logType');
+        const errorMessage = document.getElementById('error-message');
+
+        userList.innerHTML = ''; // Clear previous users
+        logType.innerHTML = ''; // Clear previous log type
+        errorMessage.innerText = ''; // Clear previous error messages
+
+        let hasData = false;
+
+        // Check if there are users
+        if (channels.recipients && channels.recipients.length > 0) {
+          channels.recipients.forEach((recipientId, index) => {
+            const userInfo = recipientId === "Deleted-User" ? `<span class="deleted-user">${recipientId}</span>` : recipientId;
+            userList.innerHTML += `<div>${index + 1}. User - ${userInfo}</div>`;
+            hasData = true;
+          });
+        }
+
+        if (!hasData) {
+          errorMessage.innerText = 'No users found.';
+        }
+
+        // Log type
+        logType.innerHTML = channels.type || 'N/A';
+      };
+
+      channelReader.readAsText(channelFile);
+    });
+
+    // Function to save changes
+    document.getElementById('saveChangesBtn').addEventListener('click', function() {
+      const usernameInput = document.getElementById('username');
+      const errorMessage = document.getElementById('error-message');
+
+      if (usernameInput.value.trim() === '') {
+        errorMessage.innerText = 'Please enter a valid user ID.';
+        return;
+      }
+
+      globalUsername = usernameInput.value.trim();
+      globalPfp = getRandomPfp();
+
+      // Update the display
+      const userList = document.getElementById('userList');
+      userList.innerHTML += `<div>${globalUsername}</div>`;
+
+      errorMessage.innerText = ''; // Clear error message
+    });
+
+    // Function to display error message
+    function showError(message) {
+      const errorMessage = document.getElementById('error-message');
+      errorMessage.innerText = message;
+    }
+  </script>
+</body>
+</html>
+>>>>>>> e7eddb2 (Initial upload)

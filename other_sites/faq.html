@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - DiscordLogUploader</title>
+    <link rel="icon" href="../pfps/logo.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #181818;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2f7bff;
+        }
+
+        .faq-section {
+            margin: 20px 0;
+        }
+
+        .question {
+            cursor: pointer;
+            padding: 15px;
+            background-color: #23272a;
+            margin: 10px 0;
+            border: 1px solid #7289da;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .question:hover {
+            background-color: #40444b;
+        }
+
+        .answer {
+            display: none;
+            padding: 10px;
+            background-color: #2c2f33;
+            border-left: 5px solid #7289da;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .arrow {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s;
+        }
+
+        .active .arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        a {
+            color: #7289da;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>FAQ - DiscordLogUploader</h1>
+
+    <div class="faq-section">
+        <div class="question">
+            <span>What is DiscordLogUploader and what does it do?</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="answer">
+            DiscordLogUploader is a tool designed to upload and display Discord server logs in JSON format. It helps you analyze messages, view timestamps, and manage chat history from your Discord messages.
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question">
+            <span>What types of files can I upload?</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="answer">
+            You can upload JSON files containing message logs from your Discord package. These logs include information like message contents, user IDs, timestamps, and attachments.
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question">
+            <span>How do I upload a file?</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="answer">
+            Click the upload button, select your JSON file containing the logs, and the application will load the file and display the messages in a structured format.
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question">
+            <span>How does the application process the data?</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="answer">
+            The application uses JavaScript and the FileReader API to read the content of your JSON file. It then parses the data to display each message, timestamp, and attachment (if any).
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question">
+            <span>What if I encounter an error?</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="answer">
+            If you run into an issue while uploading or processing the file, make sure the JSON file is correctly formatted. The application will alert you if there’s an issue with the file format.
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question">
+            <span>Why is DiscordLogUploader not working?</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="answer">
+            If the page is unresponsive and does not work, contact me on my <a href="https://dsc.gg/rilyevents">Discord server</a>.  
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+      <!-- Footer -->
+  <footer>
+    <div style="background-color: #2c2f33; padding: 20px; border-radius: 10px; text-align: center; color: #72767d;">
+      <a href="https://discord.gg/yA6drW9AJs" target="_blank" class="discord-logo" style="font-size: 30px; margin-right: 10px; color: #2f7bff;">
+        <i class="bi bi-discord"></i>
+      </a>
+      <div class="footer-links">
+        <a href="faq.html" target="_blank" style="color: #2f7bff; text-decoration: none; margin: 0 15px;">FAQ</a> |
+        <a href="terms-of-service.html" target="_blank" style="color: #2f7bff; text-decoration: none; margin: 0 15px;">Terms of Service</a> |
+        <a href="privacy-policy.html" target="_blank" style="color: #2f7bff; text-decoration: none; margin: 0 15px;">Privacy Policy</a>
+      </div>
+      <div style="margin-top: 10px;">© SkelenDev | Not affiliated with Discord, Inc.</div>
+    </div>
+  </footer>
+</body>
+
+<script>
+    document.querySelectorAll('.question').forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            question.classList.toggle('active');
+        });
+    });
+</script>
+</body>
+</html>
